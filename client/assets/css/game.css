@@ -1,0 +1,425 @@
+/* ═══════════════════════════════════════════════════════
+   HARDBOILD SUBMARINE — Game UI
+   1940s Naval Instrument Panel Aesthetic
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-deep:    #030508;
+  --bg-panel:   #080c10;
+  --bg-inset:   #050809;
+  --border:     #1a2530;
+  --border-dim: #0f1820;
+  --green:      #00cc66;
+  --green-dim:  #004422;
+  --amber:      #cc8800;
+  --amber-dim:  #2a1800;
+  --red:        #cc2200;
+  --red-dim:    #2a0500;
+  --text:       #7a9aaa;
+  --text-dim:   #2a3a44;
+  --text-bright:#c0d8e0;
+  --font:       'Share Tech Mono', 'Courier New', monospace;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ── HUD bar ───────────────────────────────────────────── */
+#hud {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.35rem 1rem;
+  background: var(--bg-panel);
+  border-bottom: 2px solid var(--border);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#hud::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green-dim), transparent);
+}
+
+#hud #weather-info {
+  flex: 1;
+  color: var(--text-dim);
+}
+
+#hud #mission-status {
+  flex: 1;
+  text-align: center;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+}
+
+#start-btn {
+  padding: 0.3rem 1rem;
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-family: var(--font);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+#start-btn:hover {
+  background: #005530;
+  box-shadow: 0 0 8px rgba(0,204,102,0.3);
+}
+
+#mute-btn {
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+#mute-btn:hover { border-color: var(--text-dim); }
+
+/* ── Instrument grid ───────────────────────────────────── */
+.instrument-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  padding: 6px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media (min-width: 600px) {
+  .instrument-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Instrument cell ───────────────────────────────────── */
+.instrument-cell {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+  /* Subtle inset shadow for depth */
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.6), 0 0 0 1px var(--border-dim);
+}
+
+.instrument-cell canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Control cell ──────────────────────────────────────── */
+.control-cell {
+  grid-column: 1 / -1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* ── Rudder controls ───────────────────────────────────── */
+.rudder-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rudder-btn {
+  flex: 1;
+  padding: 0.45rem 0.5rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s, border-color 0.1s;
+}
+.rudder-btn:active,
+.rudder-btn.active {
+  background: #0a1f10;
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 0 6px rgba(0,204,102,0.2);
+}
+
+.heading-display {
+  text-align: center;
+  min-width: 68px;
+  padding: 0.2rem;
+  border: 1px solid var(--border-dim);
+  background: var(--bg-inset);
+}
+.heading-display label {
+  display: block;
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+}
+.heading-display span {
+  font-size: 1.1rem;
+  color: var(--text-bright);
+  letter-spacing: 0.05em;
+}
+
+/* ── Status row ────────────────────────────────────────── */
+.status-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.3rem 0;
+  border-top: 1px solid var(--border-dim);
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.status-block {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+}
+.status-block label {
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  font-size: 0.6rem;
+}
+
+/* Oxygen / HP bars */
+.bar-outer {
+  width: 64px;
+  height: 7px;
+  background: #0a0a0a;
+  border: 1px solid var(--border-dim);
+}
+.bar-inner {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.4s, background 0.4s;
+}
+.bar-inner.warning { background: var(--amber); }
+.bar-inner.danger  { background: var(--red); }
+
+/* ── Button row ────────────────────────────────────────── */
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Convoy status canvas cell label ─────────────────── */
+.convoy-status {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  padding: 0.25rem 0;
+  letter-spacing: 0.06em;
+}
+
+/* ── Action buttons ────────────────────────────────────── */
+.action-btn {
+  padding: 0.5rem 1rem;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 2px;
+  transition: background 0.1s, box-shadow 0.1s;
+  text-transform: uppercase;
+}
+
+.action-btn.danger {
+  background: var(--red-dim);
+  border-color: var(--red);
+  color: #ff5533;
+}
+.action-btn.danger:hover { background: #380800; }
+.action-btn.danger:active {
+  box-shadow: 0 0 10px rgba(204,34,0,0.5);
+}
+
+.action-btn.warning {
+  background: var(--amber-dim);
+  border-color: var(--amber);
+  color: #ffaa22;
+}
+.action-btn.warning:hover { background: #3a2200; }
+.action-btn.warning:active {
+  box-shadow: 0 0 10px rgba(204,136,0,0.5);
+}
+
+/* ── Action log panel ──────────────────────────────────── */
+#action-log-panel {
+  height: 100px;
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-top: 2px solid var(--border);
+  padding: 0.3rem 0.75rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+#action-log-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
+}
+
+#action-log-panel h4 {
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.log-entry {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.log-entry:first-child { color: var(--text); }
+.log-entry.alert { color: var(--amber); }
+.log-entry.event { color: var(--green); }
+
+/* ── Game over overlay ─────────────────────────────────── */
+#game-over-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3,5,8,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+.game-over-box {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  text-align: center;
+  max-width: 380px;
+  position: relative;
+}
+
+.game-over-box::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--border-dim);
+  pointer-events: none;
+}
+
+.game-over-box h2 {
+  letter-spacing: 0.2em;
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.game-over-box p {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+}
+
+.game-over-box button {
+  padding: 0.6rem 1.8rem;
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-family: var(--font);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.game-over-box button:hover { background: #005530; }
+
+#game-over-overlay.win  .game-over-box { border-color: var(--green); }
+#game-over-overlay.win  h2 { color: var(--green); }
+#game-over-overlay.lose .game-over-box { border-color: var(--red); }
+#game-over-overlay.lose h2 { color: var(--red); }
+
+/* ── Weather warning banner ────────────────────────────── */
+#weather-alert {
+  position: fixed;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber-dim);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  padding: 0.3rem 1.2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+#weather-alert.visible { opacity: 1; }
+
+/* ── CRT scanline overlay ──────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.04) 0px,
+    rgba(0,0,0,0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-height: 500px) {
+  #action-log-panel { height: 60px; }
+  .control-cell { gap: 0.3rem; padding: 0.4rem; }
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+  .instrument-grid {
+    grid-template-columns: repeat(4, 1fr);
+    overflow-y: visible;
+  }
+  #action-log-panel { height: 50px; }
+}

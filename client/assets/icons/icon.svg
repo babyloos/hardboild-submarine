@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#030508"/>
+  <!-- Submarine silhouette -->
+  <ellipse cx="256" cy="280" rx="200" ry="55" fill="#004422"/>
+  <ellipse cx="256" cy="280" rx="200" ry="55" fill="none" stroke="#00cc66" stroke-width="6"/>
+  <!-- Conning tower -->
+  <rect x="210" y="195" width="80" height="90" rx="8" fill="#004422" stroke="#00cc66" stroke-width="4"/>
+  <!-- Periscope -->
+  <rect x="248" y="140" width="8" height="60" fill="#00cc66"/>
+  <rect x="236" y="138" width="32" height="6" rx="3" fill="#00cc66"/>
+  <!-- Propeller -->
+  <circle cx="450" cy="280" r="28" fill="none" stroke="#00cc66" stroke-width="4"/>
+  <line x1="450" y1="252" x2="450" y2="308" stroke="#00cc66" stroke-width="4"/>
+  <line x1="422" y1="280" x2="478" y2="280" stroke="#00cc66" stroke-width="4"/>
+  <!-- Sonar circles -->
+  <circle cx="80" cy="280" r="30" fill="none" stroke="#004422" stroke-width="2" stroke-dasharray="4,4"/>
+  <circle cx="80" cy="280" r="50" fill="none" stroke="#003318" stroke-width="2" stroke-dasharray="4,6"/>
+</svg>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Hardboild Submarine — Battle</title>
+  <link rel="stylesheet" href="/assets/css/game.css">
+</head>
+<body>
+
+  <!-- Weather alert banner -->
+  <div id="weather-alert"></div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <span id="weather-info">Loading weather...</span>
+    <span id="mission-status">Waiting...</span>
+    <button id="start-btn">START GAME</button>
+    <button id="mute-btn" title="Toggle sound">🔊</button>
+  </div>
+
+  <!-- ========== SUBMARINE PANEL ========== -->
+  <div id="sub-panel" class="instrument-grid hidden">
+
+    <div class="instrument-cell">
+      <canvas id="sub-engine-canvas" width="90" height="150"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="sub-speed-canvas" width="130" height="130"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="sub-depth-canvas" width="90" height="150"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="sub-compass-canvas" width="130" height="130"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="sub-sonar-canvas" width="150" height="150"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="sub-periscope-canvas" width="150" height="150"></canvas>
+    </div>
+
+    <div class="control-cell">
+      <div class="rudder-controls">
+        <button id="sub-rudder-left" class="rudder-btn">◀ PORT</button>
+        <div class="heading-display">
+          <label>HDG</label>
+          <span id="sub-heading">000°</span>
+        </div>
+        <button id="sub-rudder-right" class="rudder-btn">STBD ▶</button>
+      </div>
+
+      <div class="status-row">
+        <div class="status-block">
+          <label>COORD</label>
+          <span id="coordinates">CLASSIFIED</span>
+        </div>
+        <div class="status-block">
+          <label>O₂</label>
+          <div class="bar-outer"><div id="oxygen" class="bar-inner" style="width:100%"></div></div>
+        </div>
+        <div class="status-block">
+          <label>TORP</label>
+          <span id="torpedo-count">12</span>
+        </div>
+        <div class="status-block">
+          <label>DEPTH</label>
+          <span id="depth-display">0m</span>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="fire-torpedo" class="action-btn danger">🚀 FIRE TORPEDO</button>
+        <button id="emergency-surface" class="action-btn warning">▲ SURFACE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DESTROYER PANEL ========== -->
+  <div id="dest-panel" class="instrument-grid hidden">
+
+    <div class="instrument-cell">
+      <canvas id="dest-engine-canvas" width="90" height="150"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="dest-speed-canvas" width="130" height="130"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="dest-compass-canvas" width="130" height="130"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="dest-sonar-canvas" width="150" height="150"></canvas>
+    </div>
+    <div class="instrument-cell">
+      <canvas id="convoy-canvas" width="150" height="150"></canvas>
+    </div>
+
+    <div class="control-cell">
+      <div class="rudder-controls">
+        <button id="dest-rudder-left" class="rudder-btn">◀ PORT</button>
+        <div class="heading-display">
+          <label>HDG</label>
+          <span id="dest-heading">000°</span>
+        </div>
+        <button id="dest-rudder-right" class="rudder-btn">STBD ▶</button>
+      </div>
+
+      <div class="status-row">
+        <div class="status-block">
+          <label>DEPTH CHG</label>
+          <span id="depth-charge-count">20</span>
+        </div>
+        <div class="status-block">
+          <label>SPEED</label>
+          <span id="dest-speed-display">0.0kt</span>
+        </div>
+        <div class="status-block">
+          <label>POS</label>
+          <span id="dest-position">---</span>
+        </div>
+      </div>
+
+      <button id="drop-depth-charge" class="action-btn warning">💣 DEPTH CHARGE</button>
+    </div>
+  </div>
+
+  <!-- ========== ACTION LOG ========== -->
+  <div id="action-log-panel">
+    <h4>OPERATION LOG</h4>
+    <div id="action-log"></div>
+  </div>
+
+  <!-- ========== GAME OVER ========== -->
+  <div id="game-over-overlay" class="hidden">
+    <div class="game-over-box">
+      <h2 id="game-over-title">MISSION COMPLETE</h2>
+      <p id="game-over-result"></p>
+      <button onclick="window.location.href='/'">RETURN TO LOBBY</button>
+    </div>
+  </div>
+
+  <script src="/dist/game.js"></script>
+</body>
+</html>

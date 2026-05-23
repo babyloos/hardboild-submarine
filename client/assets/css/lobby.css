@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════════════════
+   HARDBOILD SUBMARINE — Lobby UI
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-deep:    #030508;
+  --bg-panel:   #080c10;
+  --bg-inset:   #050809;
+  --border:     #1a2530;
+  --green:      #00cc66;
+  --green-dim:  #004422;
+  --amber:      #cc8800;
+  --text:       #7a9aaa;
+  --text-dim:   #2a3a44;
+  --text-bright:#c0d8e0;
+  --font:       'Share Tech Mono', 'Courier New', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem 3rem;
+}
+
+/* CRT scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.04) 0px,
+    rgba(0,0,0,0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+#lobby {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+header::before {
+  content: '— KRIEGSMARINE / ROYAL NAVY OPERATION —';
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+}
+
+h1 {
+  font-size: 1.9rem;
+  letter-spacing: 0.22em;
+  color: var(--text-bright);
+  text-shadow:
+    0 0 20px rgba(0,200,100,0.15),
+    0 0 60px rgba(0,200,100,0.05);
+}
+
+.subtitle {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+  letter-spacing: 0.14em;
+}
+
+/* ── Join form ─────────────────────────────────────────── */
+.join-form {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1.4rem 1.2rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.join-form::before {
+  content: 'IDENTIFICATION';
+  position: absolute;
+  top: -0.5rem;
+  left: 0.8rem;
+  background: var(--bg-panel);
+  padding: 0 0.4rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+}
+
+.join-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 0.9rem;
+}
+
+.join-form input,
+.join-form select {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  color: var(--text-bright);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.7rem;
+  outline: none;
+  letter-spacing: 0.06em;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+
+.join-form input:focus,
+.join-form select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green-dim);
+}
+
+.join-form select {
+  cursor: pointer;
+}
+
+#join-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  text-transform: uppercase;
+}
+#join-btn:hover {
+  background: #005530;
+  box-shadow: 0 0 12px rgba(0,204,102,0.25);
+}
+
+/* ── Room list ─────────────────────────────────────────── */
+.room-list-section {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1rem 1.2rem;
+  position: relative;
+}
+
+.room-list-section::before {
+  content: 'ACTIVE OPERATIONS';
+  position: absolute;
+  top: -0.5rem;
+  left: 0.8rem;
+  background: var(--bg-panel);
+  padding: 0 0.4rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+}
+
+.room-list-section h2 {
+  display: none; /* replaced by ::before label */
+}
+
+.room-list-section p {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 0.8rem 0;
+}
+
+.room-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  margin-bottom: 0.4rem;
+  font-size: 0.72rem;
+  background: var(--bg-inset);
+  transition: border-color 0.15s;
+}
+.room-card:hover { border-color: #2a3a4a; }
+
+.room-card strong { color: var(--text-bright); }
+.room-card .phase {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+.room-card .phase.playing { color: var(--amber); }
+
+/* ── Lobby nav ─────────────────────────────────────────── */
+.lobby-nav {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--border);
+}
+.nav-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--green); }
+.nav-sep { color: var(--text-dim); margin: 0 0.8rem; }
+
+/* ── How to play ───────────────────────────────────────── */
+.how-to-section {
+  margin-top: 1.5rem;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1rem 1.2rem;
+  position: relative;
+}
+.how-to-section::before {
+  content: 'BRIEFING';
+  position: absolute;
+  top: -0.5rem; left: 0.8rem;
+  background: var(--bg-panel);
+  padding: 0 0.4rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+}
+.how-to-section h3 { display: none; }
+.how-to-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 440px) {
+  .how-to-grid { grid-template-columns: 1fr; }
+}
+.how-to-grid h4 {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  margin-bottom: 0.5rem;
+}
+.how-to-grid ul {
+  list-style: none;
+  padding: 0;
+}
+.how-to-grid li {
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  padding-left: 0.8rem;
+  position: relative;
+}
+.how-to-grid li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--green-dim);
+}

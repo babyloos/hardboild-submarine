@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardboild Submarine — Instrument Shop</title>
+  <link rel="stylesheet" href="/assets/css/lobby.css">
+  <style>
+    .skin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .skin-card {
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .skin-card:hover { border-color: #2a3a4a; }
+    .skin-card.owned  { border-color: var(--green-dim); }
+    .skin-card.active { border-color: var(--green); box-shadow: 0 0 8px rgba(0,204,102,0.2); }
+    .skin-preview {
+      height: 40px;
+      border-radius: 2px;
+      margin-bottom: 0.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .skin-name  { font-size: 0.8rem; color: var(--text-bright); letter-spacing: 0.1em; }
+    .skin-price { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+    .skin-badge { font-size: 0.6rem; letter-spacing: 0.12em; }
+    .skin-badge.free   { color: var(--green); }
+    .skin-badge.owned  { color: #4488ff; }
+    .buy-btn {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 0.4rem;
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border: 1px solid;
+    }
+    .buy-btn.purchase { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); }
+    .buy-btn.apply    { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .back-link { font-size: 0.7rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; }
+    .back-link:hover { color: var(--text); }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="lobby" style="max-width:640px">
+    <header>
+      <h1>INSTRUMENT SHOP</h1>
+      <p class="subtitle">Cosmetic Panel Skins — No gameplay effect</p>
+    </header>
+
+    <div class="section-header">
+      <a href="/" class="back-link">← Back to Lobby</a>
+      <span id="player-label" style="font-size:0.65rem;color:var(--text-dim)"></span>
+    </div>
+
+    <div class="skin-grid" id="skin-grid">
+      <p style="color:var(--text-dim);font-size:0.7rem">Loading skins...</p>
+    </div>
+  </div>
+
+  <script src="/dist/shop.js"></script>
+</body>
+</html>

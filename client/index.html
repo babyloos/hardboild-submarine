@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardboild Submarine</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030508">
+  <meta name="description" content="Online tactical submarine simulation — instruments only">
+  <link rel="stylesheet" href="/assets/css/lobby.css">
+
+  <!-- Google AdSense (replace ca-pub-XXXXXXXXXXXXXXXX with your publisher ID) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <!-- PWA install prompt helper -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="lobby">
+    <header>
+      <h1>HARDBOILD SUBMARINE</h1>
+      <p class="subtitle">Online Tactical Simulation — Instruments Only</p>
+    </header>
+
+    <!-- AdSense banner slot (lobby) -->
+    <!--
+    <div class="ad-slot" style="text-align:center;margin-bottom:1rem;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    -->
+
+    <section class="join-form">
+      <label>
+        Sailor Name
+        <input id="player-name" type="text" maxlength="20" placeholder="Enter name">
+      </label>
+      <label>
+        Faction
+        <select id="faction-select">
+          <option value="submarine">AXIS — U-Boot (Submarine)</option>
+          <option value="destroyer">ALLIES — Destroyer</option>
+        </select>
+      </label>
+      <button id="join-btn">JOIN BATTLE</button>
+    </section>
+
+    <section class="room-list-section">
+      <h2>Active Rooms</h2>
+      <div id="room-list"><p>Loading...</p></div>
+    </section>
+
+    <nav class="lobby-nav">
+      <a href="/shop" class="nav-link">🎨 INSTRUMENT SHOP</a>
+      <span class="nav-sep">|</span>
+      <a href="#how-to" class="nav-link">HOW TO PLAY</a>
+    </nav>
+
+    <section id="how-to" class="how-to-section">
+      <h3>HOW TO PLAY</h3>
+      <div class="how-to-grid">
+        <div>
+          <h4>⚓ SUBMARINE (AXIS)</h4>
+          <ul>
+            <li>Drag Engine gauge to set power</li>
+            <li>Hold PORT/STBD to turn</li>
+            <li>Set target depth (drag gauge)</li>
+            <li>Coordinate reveals at depth &lt;10m + speed &lt;5kt</li>
+            <li>Fire torpedoes at convoy ships</li>
+          </ul>
+        </div>
+        <div>
+          <h4>🚢 DESTROYER (ALLIES)</h4>
+          <ul>
+            <li>Protect convoys to the destination</li>
+            <li>Read sonar for submarine positions</li>
+            <li>Drop depth charges above submarines</li>
+            <li>Mission succeeds when majority of convoy arrives</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/dist/main.js"></script>
+</body>
+</html>
