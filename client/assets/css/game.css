@@ -277,6 +277,25 @@ html, body {
   box-shadow: 0 0 10px rgba(204,136,0,0.5);
 }
 
+.action-btn.periscope {
+  background: #001a0d;
+  border-color: #00aa55;
+  color: #00cc66;
+}
+.action-btn.periscope:hover { background: #002a14; }
+.action-btn.periscope.active {
+  background: #004422;
+  border-color: #00ff88;
+  color: #00ff88;
+  box-shadow: 0 0 8px rgba(0,255,136,0.35);
+}
+.action-btn.periscope:disabled {
+  background: #0a0a0a;
+  border-color: #1a1a1a;
+  color: #333;
+  cursor: not-allowed;
+}
+
 /* ── Action log panel ──────────────────────────────────── */
 #action-log-panel {
   height: 100px;

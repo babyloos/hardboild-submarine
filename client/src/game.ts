@@ -124,6 +124,29 @@ document.getElementById("emergency-surface")?.addEventListener("click", () => {
   log.add("⚠ Emergency surface!");
 });
 
+// ── Periscope toggle ────────────────────────────────────────────────────────
+let periscopeRaised = false;
+const periscopeBtn = document.getElementById("periscope-btn") as HTMLButtonElement | null;
+
+const updatePeriscopeBtn = () => {
+  if (!periscopeBtn) return;
+  const canUse = currentDepth > 0 && currentDepth < 15; // only usable at shallow depth
+  periscopeBtn.disabled = !canUse;
+  periscopeBtn.classList.toggle("active", periscopeRaised && canUse);
+  periscopeBtn.textContent = periscopeRaised && canUse ? "🔭 LOWER SCOPE" : "🔭 PERISCOPE";
+};
+
+periscopeBtn?.addEventListener("click", () => {
+  if (currentDepth <= 0 || currentDepth >= 15) {
+    log.add("⚠ Periscope: must be at depth 1–15m");
+    return;
+  }
+  periscopeRaised = !periscopeRaised;
+  socket.emit(CLIENT_EVENTS.USE_PERISCOPE, { raised: periscopeRaised });
+  log.add(periscopeRaised ? "🔭 Periscope raised" : "🔭 Periscope lowered");
+  updatePeriscopeBtn();
+});
+
 document.getElementById("drop-depth-charge")?.addEventListener("click", () => {
   socket.emit(CLIENT_EVENTS.DROP_DEPTH_CHARGE, {});
   audio.playExplosion("depth_charge");
@@ -208,6 +231,7 @@ socket.on(SERVER_EVENTS.GAME_TICK, (data: SubmarineTick | DestroyerTick) => {
     );
     setText("torpedo-count", String(sub.torpedoes));
     setWidth("oxygen", sub.oxygen);
+    updatePeriscopeBtn();
 
   } else {
     const tick = data as DestroyerTick;
